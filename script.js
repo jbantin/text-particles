@@ -1,8 +1,8 @@
+window.addEventListener("load", function () {
+  const canvas = document.getElementById("canvas1");
+  const ctx = canvas.getContext("2d");
 
-const canvas = document.getElementById('canvas1');
-const ctx = canvas.getContext('2d');
-// const myFont = new FontFace('myFont', 'url(./font/adrip1.ttf)');
+  ctx.font = "48px adrip1";
 
-console.log(ctx);
-ctx.font = "30px adrip1";
-ctx.fillText("huhuhi", 100, 100);
+  ctx.fillText("huhuhi", 100, 100);
+});
