@@ -18,6 +18,11 @@ body {
     font-size: 1.6rem;
 }
 div {
+    position:absolute;
+    z-index:5;
+    top:0;
+    left:50%;
+    transform: translateX(-50%);
     font-size: 1.6rem;
     background-color:black;
     color:white;
@@ -27,8 +32,8 @@ div {
 }
 
 #canvas1 {
-    width: 600px;
-    height: 400px;
+    position:absolute;
+    
     border: 4px solid black;
     font: 'adrip1';
     background-color: white;

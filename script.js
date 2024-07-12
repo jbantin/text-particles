@@ -8,42 +8,69 @@ window.addEventListener("load", function () {
   const textX = canvas.width / 2;
   const textY = canvas.height / 2;
 
-  ctx.font = "480px adrip1";
+  ctx.font = "256px adrip1";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.strokeStyle = "#2e3a1a";
-  ctx.lineWidth = 8;
+  ctx.fillStyle = "#770044";
+  ctx.lineWidth = 6;
 
+  const mouse = {
+    x: null,
+    y: null,
+    radius: 5000,
+  };
+
+  window.addEventListener("mousemove", function (e) {
+    mouse.x = e.x;
+    mouse.y = e.y;
+  });
   class Particle {
-    constructor(efx, x, y, color) {
-      // this.efx = efx;
+    constructor(x, y, color) {
       this.defaultX = Math.floor(x);
       this.defaultY = Math.floor(y);
       this.color = color;
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.vx = (this.defaultX - this.x) / 800;
-      this.vy = (this.defaultY - this.y) / 800;
+      this.vx = 0;
+      this.vy = 0;
+      this.dx = 0;
+      this.dy = 0;
+      this.distance = 0;
+      this.force = 0;
+      this.angle = 0;
+      this.friction = 0.7;
+      this.ease = 0.1;
     }
     draw(context, res) {
       context.fillStyle = this.color;
       context.fillRect(this.x, this.y, res, res);
     }
     update(context) {
-      
-        this.x += (this.defaultX - this.x) * 0.05;
-        this.y += (this.defaultY - this.y) * 0.05;
-      
+      this.dx = mouse.x - this.x;
+      this.dy = mouse.y - this.y;
+      this.distance = this.dx * this.dx + this.dy * this.dy;
+
+      if (this.distance < mouse.radius) {
+        this.force = -mouse.radius / this.distance;
+        this.angle = Math.atan2(this.dy, this.dx);
+        this.vx += this.force * Math.cos(this.angle);
+        this.vy += this.force * Math.sin(this.angle);
       }
+
+      this.x +=
+        (this.vx *= this.friction) + (this.defaultX - this.x) * this.ease;
+      this.y +=
+        (this.vy *= this.friction) + (this.defaultY - this.y) * this.ease;
     }
-    
+  }
 
   class Efx {
     constructor(width, height) {
       this.width = width;
       this.height = height;
       this.particlesArray = [];
-      this.res = 4;
+      this.res = 2;
     }
     init(context, text) {
       context.fillText(text, textX, textY);
@@ -61,7 +88,7 @@ window.addEventListener("load", function () {
             const green = pixels[index + 1];
             const blue = pixels[index + 2];
             const color = "rgb(" + red + "," + green + "," + blue + ")";
-            this.particlesArray.push(new Particle(this, x, y, color));
+            this.particlesArray.push(new Particle(x, y, color));
           }
         }
       }
@@ -75,16 +102,15 @@ window.addEventListener("load", function () {
       this.particlesArray.forEach((particle) => particle.update(context));
     }
   }
-
-  const efx = new Efx(canvas.width, canvas.height);
-  efx.init(ctx, text);
-  
-  animate();
-
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     efx.draw(ctx);
     efx.update(ctx);
     requestAnimationFrame(animate);
   }
+
+  const efx = new Efx(canvas.width, canvas.height);
+  efx.init(ctx, text);
+
+  animate();
 });
