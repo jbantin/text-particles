@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const text = "Anarchode";
+  const text = "Anarchodes";
   const textX = canvas.width / 2;
   const textY = canvas.height / 2;
 
@@ -12,11 +12,11 @@ window.addEventListener("load", function () {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.strokeStyle = "#2e3a1a";
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 8;
 
   class Particle {
     constructor(efx, x, y, color) {
-      this.efx = efx;
+      // this.efx = efx;
       this.defaultX = Math.floor(x);
       this.defaultY = Math.floor(y);
       this.color = color;
@@ -30,15 +30,13 @@ window.addEventListener("load", function () {
       context.fillRect(this.x, this.y, res, res);
     }
     update(context) {
-      if (Math.round(this.x) !== this.defaultX) {
-        this.x += this.vx;
-        this.y += this.vy;
-      } else {
-        this.x = this.defaultX;
-        this.y = this.defaultY;
+      
+        this.x += (this.defaultX - this.x) * 0.05;
+        this.y += (this.defaultY - this.y) * 0.05;
+      
       }
     }
-  }
+    
 
   class Efx {
     constructor(width, height) {
@@ -80,7 +78,7 @@ window.addEventListener("load", function () {
 
   const efx = new Efx(canvas.width, canvas.height);
   efx.init(ctx, text);
-  console.log(efx.particlesArray);
+  
   animate();
 
   function animate() {
