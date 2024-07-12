@@ -3,6 +3,7 @@
     src: url(./font/adrip1.ttf) format('truetype');
     font-weight: 400;
     font-style: normal;
+    
 }
 
 * {
@@ -13,7 +14,8 @@
 }
 body {
     font-family: 'adrip1';
-    background-color:rgb(46, 58, 26)
+    background-color:#2e3a1a;
+    font-size: 1.6rem;
 }
 div {
     font-size: 1.6rem;
