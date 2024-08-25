@@ -11,9 +11,9 @@ window.addEventListener("load", function () {
   ctx.font = "256px adrip1";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.strokeStyle = "#2e3a1a";
-  ctx.fillStyle = "#770044";
-  ctx.lineWidth = 6;
+  ctx.strokeStyle = "#000000";
+  ctx.fillStyle = "#444444";
+  ctx.lineWidth = 8;
 
   const mouse = {
     x: null,
@@ -70,7 +70,7 @@ window.addEventListener("load", function () {
       this.width = width;
       this.height = height;
       this.particlesArray = [];
-      this.res = 2;
+      this.res = 4;
     }
     init(context, text) {
       context.fillText(text, textX, textY);
